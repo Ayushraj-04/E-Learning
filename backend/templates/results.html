@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results for "{{ topic }}"</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><i class="fas fa-layer-group"></i> E-Learn</div>
+    <nav>
+        <a href="/">New Search <i class="fas fa-search"></i></a>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="results-header">
+        <h2>Results for: <span>"{{ topic | title }}"</span></h2>
+        
+        <div class="live-filters">
+            <select id="durationFilter">
+                <option value="all">All Durations</option>
+                <option value="short">Short Only</option>
+                <option value="medium">Medium Only</option>
+                <option value="long">Long Only</option>
+            </select>
+            <select id="costFilter">
+                <option value="all">All Costs</option>
+                <option value="free">Free Only</option>
+                <option value="paid">Paid Only</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('youtube', this)"><i class="fab fa-youtube"></i> Video Tutorials</button>
+        <button class="tab-btn" onclick="openTab('website', this)"><i class="fas fa-book-open"></i> Web Articles</button>
+    </div>
+
+    <div id="youtube" class="tab-content active">
+        <div class="resource-grid">
+            {% for r in resources %}
+                {% if r.platform == "youtube" %}
+                <div class="result-card" data-duration="{{ r.duration }}" data-cost="{{ r.cost }}">
+                    <div class="card-body">
+                        <h3><i class="fab fa-youtube" style="color: #ef4444;"></i> {{ r.title }}</h3>
+                        <div class="badges">
+                            <span class="badge cost-{{ r.cost }}">{{ r.cost | title }}</span>
+                            <span class="badge duration-{{ r.duration }}"><i class="far fa-clock"></i> {{ r.duration | title }}</span>
+                        </div>
+                        <div class="prereq">
+                            <strong><i class="fas fa-clipboard-list"></i> Prerequisites:</strong>
+                            <ul>
+                                {% for req in r.prerequisites %}
+                                    <li>{{ req }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="{{ r.link }}" target="_blank" class="btn-card">Open Video <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="website" class="tab-content">
+        <div class="resource-grid">
+            {% for r in resources %}
+                {% if r.platform == "website" %}
+                <div class="result-card" data-duration="{{ r.duration }}" data-cost="{{ r.cost }}">
+                    <div class="card-body">
+                        <h3><i class="fas fa-globe" style="color: #0284c7;"></i> {{ r.title }}</h3>
+                        <div class="badges">
+                            <span class="badge cost-{{ r.cost }}">{{ r.cost | title }}</span>
+                            <span class="badge duration-{{ r.duration }}"><i class="far fa-clock"></i> {{ r.duration | title }}</span>
+                        </div>
+                        <div class="prereq">
+                            <strong><i class="fas fa-clipboard-list"></i> Prerequisites:</strong>
+                            <ul>
+                                {% for req in r.prerequisites %}
+                                    <li>{{ req }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="{{ r.link }}" target="_blank" class="btn-card">Read Article <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

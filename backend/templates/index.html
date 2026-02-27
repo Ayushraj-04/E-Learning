@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learn | Smart Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo"><i class="fas fa-layer-group"></i> E-Learn</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="#">Categories</a>
+    </nav>
+</header>
+
+<main class="hero">
+    <div class="hero-content">
+        <h1>Structured Learning Paths</h1>
+        <p>Find highly rated YouTube tutorials, GeeksforGeeks articles, and roadmaps.</p>
+
+        <form class="search-form" action="/results" method="GET">
+            <div class="search-input-group">
+                <i class="fas fa-search"></i>
+                <input type="text" name="topic" placeholder="Search topics (e.g., Python, SQL)..." required>
+            </div>
+            
+            <div class="filter-group">
+                <select name="duration">
+                    <option value="all">⏱ Any Duration</option>
+                    <option value="short">Short (< 10 mins)</option>
+                    <option value="medium">Medium (10 - 30 mins)</option>
+                    <option value="long">Long (> 30 mins)</option>
+                </select>
+
+                <select name="cost">
+                    <option value="all">💰 Free & Paid</option>
+                    <option value="free">Free Only</option>
+                    <option value="paid">Paid Only</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary"><i class="fas fa-bolt"></i> Generate Recommendations</button>
+        </form>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
